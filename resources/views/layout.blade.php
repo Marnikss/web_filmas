@@ -16,6 +16,9 @@
                     <a class="nav-link" href="/rezisori">rezisori</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="/filmas">Filmas</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="/logout">Beigt darbu</a>
                 </li>
             @else

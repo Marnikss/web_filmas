@@ -13,13 +13,13 @@
             <tbody>
                 @foreach($items as $rezisori)
                     <tr>
-                    <td>{{ $rezisori->id }}</td>
-                    <td>{{ $rezisori->name }}</td>
-                    <td><a href="/rezisori/update/{{ $rezisori->id }}" class="btn btn-outline-primary btnsm">Labot</a>
-                    <form action="/rezisori/delete/{{ $rezisori->id }}" method="post" class="deletionform d-inline">
-                    @csrf
-                    <button type="submit" class="btn btn-outline-danger btn-sm">Dzēst</button>
-                    </form></td>
+                        <td>{{ $rezisori->id }}</td>
+                        <td>{{ $rezisori->name }}</td>
+                        <td><a href="/rezisori/update/{{ $rezisori->id }}" class="btn btn-outline-primary btnsm">Labot</a>
+                        <form action="/rezisori/delete/{{ $rezisori->id }}" method="post" class="deletionform d-inline">
+                            @csrf
+                            <button type="submit" class="btn btn-outline-danger btn-sm">Dzēst</button>
+                        </form></td>
                     </tr>
                 @endforeach
             </tbody>
