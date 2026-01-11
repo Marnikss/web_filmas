@@ -11,18 +11,18 @@
     <!-- NAVBAR ------------------------------------------------------------------------------------------------ -->
     <nav>
         <ul>
-            <li>
-            <a href="#">Home</a>
-            </li>
-            <li>
-            <a href="#">About</a>
-            </li>
-            <li>
-            <a href="#">Services</a>
-            </li>
-            <li>
-            <a href="#">Contact</a>
-            </li>
+            @if(Auth::check())
+                <li class="nav-item">
+                    <a class="nav-link" href="/rezisori">rezisori</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Beigt darbu</a>
+                </li>
+            @else
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Autentificēties</a>
+                </li>
+            @endif
         </ul>
     </nav>
     <!-- NAVBAR ------------------------------------------------------------------------------------------------ -->
@@ -60,5 +60,6 @@
             </div>
         </footer>
     <!-- Footer ------------------------------------------------------------------------------------------------ -->
+     <script src="/js/admin.js"></script>
  </body>
 </html>
