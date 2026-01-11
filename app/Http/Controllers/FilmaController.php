@@ -8,6 +8,7 @@ use App\Models\Filma;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controllers\HasMiddleware;
+use App\Http\Requests\FilmasRequest;
 
 class FilmaController extends Controller implements HasMiddleware
 {
@@ -44,42 +45,79 @@ class FilmaController extends Controller implements HasMiddleware
         );
     }
 
-    // create new Filmas entry
-    public function put(Request $request): RedirectResponse
-    {
-        $validatedData = $request->validate([
-            'name' => 'required|min:3|max:256',
-            'rezisors_id' => 'required',
-            'description' => 'nullable',
-            'price' => 'nullable|numeric',
-            'year' => 'numeric',
-            'image' => 'nullable|image',
-            'display' => 'nullable',
-        ]);
-        $filmas = new Filma();
-        $filmas->name = $validatedData['name'];
-        $filmas->rezisors_id = $validatedData['rezisors_id'];
-        $filmas->description = $validatedData['description'];
-        $filmas->price = $validatedData['price'];
-        $filmas->year = $validatedData['year'];
-        $filmas->display = (bool) ($validatedData['display'] ?? false);
+    // // create new Filmas entry
+    // public function put(Request $request): RedirectResponse
+    // {
+    //     $validatedData = $request->validate([
+    //         'name' => 'required|min:3|max:256',
+    //         'rezisors_id' => 'required',
+    //         'description' => 'nullable',
+    //         'price' => 'nullable|numeric',
+    //         'year' => 'numeric',
+    //         'image' => 'nullable|image',
+    //         'display' => 'nullable',
+    //     ]);
+    //     $filmas = new Filma();
+    //     $filmas->name = $validatedData['name'];
+    //     $filmas->rezisors_id = $validatedData['rezisors_id'];
+    //     $filmas->description = $validatedData['description'];
+    //     $filmas->price = $validatedData['price'];
+    //     $filmas->year = $validatedData['year'];
+    //     $filmas->display = (bool) ($validatedData['display'] ?? false);
 
-        if ($request->hasFile('image')) {
-            // šeit varat pievienot kodu, kas nodzēš veco bildi, ja pievieno jaunu
-            $uploadedFile = $request->file('image');
-            $extension = $uploadedFile->clientExtension();
-            $name = uniqid();
-            $filmas->image = $uploadedFile->storePubliclyAs(
-            '/',
-            $name . '.' . $extension,
-            'uploads'
-            );
-        }
+    //     if ($request->hasFile('image')) {
+    //         // šeit varat pievienot kodu, kas nodzēš veco bildi, ja pievieno jaunu
+    //         $uploadedFile = $request->file('image');
+    //         $extension = $uploadedFile->clientExtension();
+    //         $name = uniqid();
+    //         $filmas->image = $uploadedFile->storePubliclyAs(
+    //         '/',
+    //         $name . '.' . $extension,
+    //         'uploads'
+    //         );
+    //     }
 
 
-        $filmas->save();
-        return redirect('/filmas');
-    }
+    //     $filmas->save();
+    //     return redirect('/filmas');
+    // }
+
+    // update Filmas data
+    // public function patch(Filma $filmas, Request $request): RedirectResponse
+    // {
+    //     $validatedData = $request->validate([
+    //     'name' => 'required|min:3|max:256',
+    //     'rezisors_id' => 'required',
+    //     'description' => 'nullable',
+    //     'price' => 'nullable|numeric',
+    //     'year' => 'numeric',
+    //     'image' => 'nullable|image',
+    //     'display' => 'nullable',
+    //     ]);
+    //     $filmas->name = $validatedData['name'];
+    //     $filmas->rezisors_id = $validatedData['rezisors_id'];
+    //     $filmas->description = $validatedData['description'];
+    //     $filmas->price = $validatedData['price'];
+    //     $filmas->year = $validatedData['year'];
+    //     $filmas->display = (bool) ($validatedData['display'] ?? false);
+
+    //     if ($request->hasFile('image')) {
+    //         // šeit varat pievienot kodu, kas nodzēš veco bildi, ja pievieno jaunu
+    //         $uploadedFile = $request->file('image');
+    //         $extension = $uploadedFile->clientExtension();
+    //         $name = uniqid();
+    //         $filmas->image = $uploadedFile->storePubliclyAs(
+    //         '/',
+    //         $name . '.' . $extension,
+    //         'uploads'
+    //         );
+    //     }
+
+
+    //     $filmas->save();
+    //     return redirect('/filmas');
+    // }
+
     // display Filmas edit form
     public function update(Filma $filmas): View
     {
@@ -93,41 +131,7 @@ class FilmaController extends Controller implements HasMiddleware
         ]
         );
     }
-    // update Filmas data
-    public function patch(Filma $filmas, Request $request): RedirectResponse
-    {
-        $validatedData = $request->validate([
-        'name' => 'required|min:3|max:256',
-        'rezisors_id' => 'required',
-        'description' => 'nullable',
-        'price' => 'nullable|numeric',
-        'year' => 'numeric',
-        'image' => 'nullable|image',
-        'display' => 'nullable',
-        ]);
-        $filmas->name = $validatedData['name'];
-        $filmas->rezisors_id = $validatedData['rezisors_id'];
-        $filmas->description = $validatedData['description'];
-        $filmas->price = $validatedData['price'];
-        $filmas->year = $validatedData['year'];
-        $filmas->display = (bool) ($validatedData['display'] ?? false);
-
-        if ($request->hasFile('image')) {
-            // šeit varat pievienot kodu, kas nodzēš veco bildi, ja pievieno jaunu
-            $uploadedFile = $request->file('image');
-            $extension = $uploadedFile->clientExtension();
-            $name = uniqid();
-            $filmas->image = $uploadedFile->storePubliclyAs(
-            '/',
-            $name . '.' . $extension,
-            'uploads'
-            );
-        }
-
-
-        $filmas->save();
-        return redirect('/filmas');
-    }
+    
     // delete Filmas
     public function delete(Filma $filmas): RedirectResponse
     {
@@ -139,4 +143,53 @@ class FilmaController extends Controller implements HasMiddleware
         return redirect('/filmas');
     }
 
+
+
+
+    // validate and save Filmas data
+    private function saveFilmasData(Filma $filmas, FilmasRequest $request): void
+    {
+    $validatedData = $request->validate([
+        'name' => 'required|min:3|max:256',
+        'rezisors_id' => 'required',
+        'description' => 'nullable',
+        'price' => 'nullable|numeric',
+        'year' => 'numeric',
+        'image' => 'nullable|image',
+        'display' => 'nullable',
+    ]);
+    $filmas->name = $validatedData['name'];
+    $filmas->rezisors_id = $validatedData['rezisors_id'];
+    $filmas->description = $validatedData['description'];
+    $filmas->price = $validatedData['price'];
+    $filmas->year = $validatedData['year'];
+    $validatedData = $request->validated();
+    $filmas->fill($validatedData);
+    $filmas->display = (bool) ($validatedData['display'] ?? false);
+    if ($request->hasFile('image')) {
+        // šeit varat pievienot kodu, kas nodzēš veco bildi, ja pievieno jaunu
+        $uploadedFile = $request->file('image');
+        $extension = $uploadedFile->clientExtension();
+        $name = uniqid();
+        $filmas->image = $uploadedFile->storePubliclyAs(
+        '/',
+        $name . '.' . $extension,
+        'uploads'
+        );
+    }
+    $filmas->save();
+    }
+    public function put(FilmasRequest $request): RedirectResponse
+    {
+        $filmas = new Filma();
+        $this->saveFilmasData($filmas, $request);
+        return redirect('/filmas');
+    }
+    public function patch(Filma $filmas, FilmasRequest $request): RedirectResponse
+    {
+        $this->saveFilmasData($filmas, $request);
+        return redirect('/filmas');
+    }
+
 }
+
