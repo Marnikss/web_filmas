@@ -11,16 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('filmas', function (Blueprint $table) {
+        Schema::create('kategorijas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('rezisors_id');
-            $table->foreignId('kategorija_id');
-            $table->string('name', 256);
+            $table->string('name');
             $table->text('description')->nullable();
-            $table->decimal('price', 8, 2)->nullable();
-            $table->integer('year');
-            $table->string('image', 256)->nullable();
-            $table->boolean('display');
             $table->timestamps();
         });
     }
@@ -30,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('filmas');
+        Schema::dropIfExists('kategorijas');
     }
 };

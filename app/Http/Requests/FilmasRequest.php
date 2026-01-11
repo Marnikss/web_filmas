@@ -24,6 +24,7 @@ class FilmasRequest extends FormRequest
         return [
             'name' => 'required|min:3|max:256',
             'rezisors_id' => 'required',
+            'kategorija_id' => 'required',
             'description' => 'nullable',
             'price' => 'nullable|numeric',
             'year' => 'numeric',
@@ -49,6 +50,7 @@ class FilmasRequest extends FormRequest
         return [
             'name' => 'nosaukums',
             'rezisors_id' => 'rezisors',
+            'kategorija_id' => 'kategorija',
             'description' => 'apraksts',
             'price' => 'cena',
             'year' => 'gads',

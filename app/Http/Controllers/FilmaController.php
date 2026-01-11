@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Rezisori;
 use App\Models\Filma;
+use App\Models\Kategorija;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controllers\HasMiddleware;
@@ -35,12 +36,14 @@ class FilmaController extends Controller implements HasMiddleware
     public function create(): View
     {
         $rezisori = Rezisori::orderBy('name', 'asc')->get();
+        $kategorijas = Kategorija::orderBy('name', 'asc')->get();
         return view(
         'filmas.form',
         [
         'title' => 'Pievienot filmu',
         'filmas' => new Filma(),
         'rezisori' => $rezisori,
+        'kategorijas' => $kategorijas
         ]
         );
     }
@@ -120,14 +123,17 @@ class FilmaController extends Controller implements HasMiddleware
 
     // display Filmas edit form
     public function update(Filma $filmas): View
+    
     {
         $rezisori = Rezisori::orderBy('name', 'asc')->get();
+        $kategorijas = Kategorija::orderBy('name', 'asc')->get();
         return view(
         'filmas.form',
         [
         'title' => 'Rediģēt filmu',
         'filmas' => $filmas,
         'rezisori' => $rezisori,
+        'kategorijas' => $kategorijas
         ]
         );
     }
@@ -153,6 +159,7 @@ class FilmaController extends Controller implements HasMiddleware
         'name' => 'required|min:3|max:256',
         'rezisors_id' => 'required',
         'description' => 'nullable',
+        'kategorija_id' => 'nullable',
         'price' => 'nullable|numeric',
         'year' => 'numeric',
         'image' => 'nullable|image',
@@ -161,13 +168,13 @@ class FilmaController extends Controller implements HasMiddleware
     $filmas->name = $validatedData['name'];
     $filmas->rezisors_id = $validatedData['rezisors_id'];
     $filmas->description = $validatedData['description'];
+    $filmas->kategorija_id = $validatedData['kategorija_id'];
     $filmas->price = $validatedData['price'];
     $filmas->year = $validatedData['year'];
     $validatedData = $request->validated();
     $filmas->fill($validatedData);
     $filmas->display = (bool) ($validatedData['display'] ?? false);
     if ($request->hasFile('image')) {
-        // šeit varat pievienot kodu, kas nodzēš veco bildi, ja pievieno jaunu
         $uploadedFile = $request->file('image');
         $extension = $uploadedFile->clientExtension();
         $name = uniqid();

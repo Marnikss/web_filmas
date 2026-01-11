@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RezisoriController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FilmaController;
+use App\Http\Controllers\KategorijaController;
 
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/rezisori', [RezisoriController::class, 'list']);
@@ -26,3 +27,11 @@ Route::post('/filmas/put', [FilmaController::class, 'put']);
 Route::get('/filmas/update/{filmas}', [FilmaController::class, 'update']);
 Route::post('/filmas/patch/{filmas}', [FilmaController::class, 'patch']);
 Route::post('/filmas/delete/{filmas}', [FilmaController::class, 'delete']);
+
+// Kategorijas routes
+Route::get('/kategorijas', [KategorijaController::class, 'list']);
+Route::get('/kategorijas/create', [KategorijaController::class, 'create']);
+Route::post('/kategorijas/put', [KategorijaController::class, 'put']);
+Route::get('/kategorijas/update/{kategorijas}', [KategorijaController::class, 'update']);
+Route::post('/kategorijas/patch/{kategorijas}', [KategorijaController::class, 'patch']);
+Route::post('/kategorijas/delete/{kategorijas}', [KategorijaController::class, 'delete']);

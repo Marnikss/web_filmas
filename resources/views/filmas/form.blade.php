@@ -45,7 +45,23 @@
                     <p class="error-message">{{ $errors->first('rezisors_id') }}</p>
                 @enderror
             </div>
-            
+            <div class="form-group">
+                <label for="filmas-kategorijas" class="form-label-custom">Kategorija</label>
+                <select id="filmas-kategorijas"
+                        name="kategorija_id"
+                        class="form-select-custom @error('kategorija_id') input-error @enderror">
+                    <option value="">Izvēlieties kategoriju</option>
+                    @foreach($kategorijas as $kategorija)
+                        <option value="{{ $kategorija->id }}"
+                                @if ($kategorija->id == old('kategorija_id', $filmas->kategorija_id)) selected @endif>
+                            {{ $kategorija->name }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('kategorija_id')
+                    <p class="error-message">{{ $errors->first('kategorija_id') }}</p>
+                @enderror
+            </div>
             <div class="form-group">
                 <label for="filmas-description" class="form-label-custom">Apraksts</label>
                 <textarea id="filmas-description"
