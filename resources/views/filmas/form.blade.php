@@ -1,102 +1,129 @@
 @extends('layout')
 @section('content')
-    <h1>{{ $title }}</h1>
-    @if ($errors->any())
-        <div class="alert alert-danger">Lūdzu, novērsiet radušās kļūdas!</div>
-    @endif
-    <form
-        method="post"
-        action="{{ $filmas->exists ? '/filmas/patch/' . $filmas->id : '/filmas/put' }}">
-        @csrf
-        <div class="mb-3">
-            <label for="filmas-name" class="form-label">Nosaukums</label>
-            <input
-            type="text"
-            id="filmas-name"
-            name="name"
-            value="{{ old('name', $filmas->name) }}"
-            class="form-control @error('name') is-invalid @enderror"
-            >
-            @error('name')
-                <p class="invalid-feedback">{{ $errors->first('name') }}</p>
-            @enderror
-        </div>
-        <div class="mb-3">
-            <label for="filmas-rezisors" class="form-label">Režisors</label>
-            <select
-                id="filmas-rezisors"
-                name="rezisors_id"
-                class="form-select @error('rezisors_id') is-invalid @enderror"
-                >
-                <option value="">Norādiet autoru!</option>
-                @foreach($rezisori as $rezisors)
-                    <option
-                    value="{{ $rezisors->id }}"
-                    @if ($rezisors->id == old('rezisors_id', $filmas->rezisors->id ?? false)) selected @endif
-                    >{{ $rezisors->name }}</option>
-                @endforeach
-            </select>
-            @error('rezisors_id')
-                <p class="invalid-feedback">{{ $errors->first('rezisors_id') }}</p>
-            @enderror
-        </div>
-        <div class="mb-3">
-            <label for="filmas-description" class="form-label">Apraksts</label>
-            <textarea
-            id="filmas-description"
-            name="description"
-            class="form-control @error('description') is-invalid @enderror"
-            >{{ old('description', $filmas->description) }}</textarea>
-            @error('description')
-                <p class="invalid-feedback">{{ $errors->first('description') }}</p>
-            @enderror
-        </div>
-        <div class="mb-3">
-            <label for="filmas-year" class="form-label">Izdošanas gads</label>
-            <input
-            type="number" max="{{ date('Y') + 1 }}" step="1"
-            id="filmas-year"
-            name="year"
-            value="{{ old('year', $filmas->year) }}"
-            class="form-control @error('year') is-invalid @enderror"
-            >
-            @error('year')
-                <p class="invalid-feedback">{{ $errors->first('year') }}</p>
-            @enderror
-        </div>
-        <div class="mb-3">
-            <label for="filmas-price" class="form-label">Cena</label>
-            <input
-            type="number" min="0.00" step="0.01" lang="en"
-            id="filmas-price"
-            name="price"
-            value="{{ old('price', $filmas->price) }}"
-            class="form-control @error('price') is-invalid @enderror"
-            >
-            @error('price')
-                <p class="invalid-feedback">{{ $errors->first('price') }}</p>
-            @enderror
-        </div>
-        // image
-        <div class="mb-3">
-            <div class="form-check">
-                <input
-                type="checkbox"
-                id="filmas-display"
-                name="display"
-                value="1"
-                class="form-check-input @error('display') is-invalid @enderror"
-                @if (old('display', $filmas->display)) checked @endif>
-                <label class="form-check-label" for="filmas-display">
-                    Publicēt ierakstu
-                </label>
-                @error('display')
-                    <p class="invalid-feedback">{{ $errors->first('display') }}</p>
+    <div class="form-container">
+        <h1 class="form-title gradient-text">{{ $title }}</h1>
+        
+        @if ($errors->any())
+            <div class="form-errors alert alert-danger">
+                <div class="error-icon">⚠️</div>
+                <div class="error-text">Lūdzu, novērsiet radušās kļūdas!</div>
+            </div>
+        @endif
+        
+        <form method="post" 
+              action="{{ $filmas->exists ? '/filmas/patch/' . $filmas->id : '/filmas/put' }}"
+              class="custom-form">
+            @csrf
+            
+            <div class="form-group">
+                <label for="filmas-name" class="form-label-custom">Nosaukums</label>
+                <input type="text"
+                       id="filmas-name"
+                       name="name"
+                       value="{{ old('name', $filmas->name) }}"
+                       class="form-input-custom @error('name') input-error @enderror"
+                       placeholder="Ievadiet filmas nosaukumu">
+                @error('name')
+                    <p class="error-message">{{ $errors->first('name') }}</p>
                 @enderror
             </div>
-        </div>
-        <button type="submit" class="btn btn-primary">
-            {{ $filmas->exists ? 'Atjaunot ierakstu' : 'Pievienot ierakstu' }}
-        </button>
-    </form>
+            
+            <div class="form-group">
+                <label for="filmas-rezisors" class="form-label-custom">Režisors</label>
+                <select id="filmas-rezisors"
+                        name="rezisors_id"
+                        class="form-select-custom @error('rezisors_id') input-error @enderror">
+                    <option value="">Izvēlieties režisoru</option>
+                    @foreach($rezisori as $rezisors)
+                        <option value="{{ $rezisors->id }}"
+                                @if ($rezisors->id == old('rezisors_id', $filmas->rezisors_id)) selected @endif>
+                            {{ $rezisors->name }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('rezisors_id')
+                    <p class="error-message">{{ $errors->first('rezisors_id') }}</p>
+                @enderror
+            </div>
+            
+            <div class="form-group">
+                <label for="filmas-description" class="form-label-custom">Apraksts</label>
+                <textarea id="filmas-description"
+                          name="description"
+                          class="form-textarea-custom @error('description') input-error @enderror"
+                          placeholder="Īss filmas apraksts..."
+                          rows="4">{{ old('description', $filmas->description) }}</textarea>
+                @error('description')
+                    <p class="error-message">{{ $errors->first('description') }}</p>
+                @enderror
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group form-group-half">
+                    <label for="filmas-year" class="form-label-custom">Izdošanas gads</label>
+                    <input type="number" 
+                           id="filmas-year"
+                           name="year"
+                           value="{{ old('year', $filmas->year) }}"
+                           class="form-input-custom @error('year') input-error @enderror"
+                           min="1900"
+                           max="{{ date('Y') }}">
+                    @error('year')
+                        <p class="error-message">{{ $errors->first('year') }}</p>
+                    @enderror
+                </div>
+                
+                <div class="form-group form-group-half">
+                    <label for="filmas-price" class="form-label-custom">Cena (€)</label>
+                    <input type="number" 
+                           step="0.01"
+                           id="filmas-price"
+                           name="price"
+                           value="{{ old('price', $filmas->price) }}"
+                           class="form-input-custom @error('price') input-error @enderror"
+                           min="0">
+                    @error('price')
+                        <p class="error-message">{{ $errors->first('price') }}</p>
+                    @enderror
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label-custom">Attēls</label>
+                <input type="text"
+                       id="filmas-image"
+                       name="image"
+                       value="{{ old('image', $filmas->image) }}"
+                       class="form-input-custom @error('image') input-error @enderror"
+                       placeholder="https://example.com/image.jpg">
+                @error('image')
+                    <p class="error-message">{{ $errors->first('image') }}</p>
+                @enderror
+            </div>
+            
+            <div class="form-group checkbox-group">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox"
+                           id="filmas-display"
+                           name="display"
+                           value="1"
+                           class="checkbox-custom @error('display') input-error @enderror"
+                           @if (old('display', $filmas->display)) checked @endif>
+                    <label for="filmas-display" class="checkbox-label">
+                        <span class="checkmark"></span>
+                        Publicēt ierakstu
+                    </label>
+                </div>
+                @error('display')
+                    <p class="error-message">{{ $errors->first('display') }}</p>
+                @enderror
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn-orange submit-btn">
+                    {{ $filmas->exists ? 'Atjaunot ierakstu' : 'Pievienot ierakstu' }}
+                </button>
+            </div>
+        </form>
+    </div>
 @endsection
