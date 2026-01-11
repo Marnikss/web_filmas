@@ -63,6 +63,20 @@ class FilmaController extends Controller implements HasMiddleware
         $filmas->price = $validatedData['price'];
         $filmas->year = $validatedData['year'];
         $filmas->display = (bool) ($validatedData['display'] ?? false);
+
+        if ($request->hasFile('image')) {
+            // šeit varat pievienot kodu, kas nodzēš veco bildi, ja pievieno jaunu
+            $uploadedFile = $request->file('image');
+            $extension = $uploadedFile->clientExtension();
+            $name = uniqid();
+            $filmas->image = $uploadedFile->storePubliclyAs(
+            '/',
+            $name . '.' . $extension,
+            'uploads'
+            );
+        }
+
+
         $filmas->save();
         return redirect('/filmas');
     }
@@ -97,12 +111,29 @@ class FilmaController extends Controller implements HasMiddleware
         $filmas->price = $validatedData['price'];
         $filmas->year = $validatedData['year'];
         $filmas->display = (bool) ($validatedData['display'] ?? false);
+
+        if ($request->hasFile('image')) {
+            // šeit varat pievienot kodu, kas nodzēš veco bildi, ja pievieno jaunu
+            $uploadedFile = $request->file('image');
+            $extension = $uploadedFile->clientExtension();
+            $name = uniqid();
+            $filmas->image = $uploadedFile->storePubliclyAs(
+            '/',
+            $name . '.' . $extension,
+            'uploads'
+            );
+        }
+
+
         $filmas->save();
         return redirect('/filmas');
     }
     // delete Filmas
     public function delete(Filma $filmas): RedirectResponse
     {
+        if ($filmas->image) {
+            unlink(getcwd() . '/images/' . $filmas->image);
+        }
         // dzēšam arī filmas
         $filmas->delete();
         return redirect('/filmas');

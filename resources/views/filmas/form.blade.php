@@ -12,7 +12,7 @@
         
         <form method="post" 
               action="{{ $filmas->exists ? '/filmas/patch/' . $filmas->id : '/filmas/put' }}"
-              class="custom-form">
+              class="custom-form" enctype="multipart/form-data">
             @csrf
             
             <div class="form-group">
@@ -88,16 +88,23 @@
                 </div>
             </div>
             
-            <div class="form-group">
-                <label class="form-label-custom">Attēls</label>
-                <input type="text"
-                       id="filmas-image"
-                       name="image"
-                       value="{{ old('image', $filmas->image) }}"
-                       class="form-input-custom @error('image') input-error @enderror"
-                       placeholder="https://example.com/image.jpg">
+            <div class="mb-3">
+                <label for="filmas-image" class="form-label">Attēls</label>
+                @if ($filmas->image)
+                    <img
+                    src="{{ asset('images/' . $filmas->image) }}"
+                    class="img-fluid img-thumbnail d-block mb-2"
+                    alt="{{ $filmas->name }}"
+                    >
+                @endif
+                <input
+                type="file" accept="image/png, image/jpeg, image/webp"
+                id="filmas-image"
+                name="image"
+                class="form-control @error('image') is-invalid @enderror"
+                >
                 @error('image')
-                    <p class="error-message">{{ $errors->first('image') }}</p>
+                    <p class="invalid-feedback">{{ $errors->first('image') }}</p>
                 @enderror
             </div>
             
