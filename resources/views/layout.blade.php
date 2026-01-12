@@ -13,7 +13,7 @@
         <ul>
             @if(Auth::check())
                 <li class="nav-item">
-                    <a class="nav-link" href="/rezisori">rezisori</a>
+                    <a class="nav-link" href="/rezisori">Režisori</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/filmas">Filmas</a>
@@ -38,30 +38,9 @@
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-md-6">
-                        <div class="footer-brand">CompanyName</div>
-                        <p class="footer-text">Creating amazing experiences and innovative solutions for our customers
-                            worldwide.</p>
-                        <div class="social-links">
-                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                            <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
-                            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                            <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
-                        </div>
+                        <div class="footer-brand">2. Darbs</div>
+                        <p class="footer-text">Daniels Bērziņš 2ITB</p>
                     </div>
-
-                    <div class="col-md-6 text-md-end">
-                        <ul class="footer-links">
-                            <li><a href="#">About</a></li>
-                            <li><a href="#">Services</a></li>
-                            <li><a href="#">Contact</a></li>
-                            <li><a href="#">Privacy</a></li>
-                            <li><a href="#">Terms</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="copyright text-center">
-                    © 2024 CompanyName. All rights reserved.
                 </div>
             </div>
         </footer>

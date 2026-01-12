@@ -55,6 +55,6 @@
     @endif
     
     <div class="add-button-container">
-        <a href="/filmas/create" class="btn-orange add-button">Pievienot jaunu filmu</a>
+        <a href="/filmas/create" class="btn btn-primary" style="margin-left:40px">Pievienot jaunu filmu</a>
     </div>
 @endsection

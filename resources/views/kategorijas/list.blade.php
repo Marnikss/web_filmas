@@ -17,10 +17,10 @@
                         <td>{{ $kategorijas->id }}</td>
                         <td>{{ $kategorijas->name }}</td>
                         <td>{{ $kategorijas->description }}</td>
-                        <td><a href="/kategorijas/update/{{ $kategorijas->id }}" class="btn btn-outline-primary btnsm">Labot</a>
+                        <td><a href="/kategorijas/update/{{ $kategorijas->id }}" class="btn-orange btn-sm">Labot</a>
                         <form action="/kategorijas/delete/{{ $kategorijas->id }}" method="post" class="deletionform d-inline">
                             @csrf
-                            <button type="submit" class="btn btn-outline-danger btn-sm">Dzēst</button>
+                            <button type="submit" class="btn-orange btn-sm">Dzēst</button>
                         </form></td>
                     </tr>
                 @endforeach
@@ -29,5 +29,5 @@
     @else
         <p>Nav atrasts neviens ieraksts</p>
     @endif
-    <a href="/kategorijas/create" class="btn btn-primary">Izveidot jaunu</a>
+    <a href="/kategorijas/create" class="btn btn-primary" style="margin-left: 40px">Izveidot jaunu</a>
 @endsection

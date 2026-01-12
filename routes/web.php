@@ -6,8 +6,10 @@ use App\Http\Controllers\RezisoriController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FilmaController;
 use App\Http\Controllers\KategorijaController;
+use App\Http\Controllers\DataController;
 
 Route::get('/', [HomeController::class, 'index']);
+
 Route::get('/rezisori', [RezisoriController::class, 'list']);
 Route::get('/rezisori/create', [RezisoriController::class, 'create']);
 Route::post('/rezisori/put', [RezisoriController::class, 'put']);
@@ -35,3 +37,8 @@ Route::post('/kategorijas/put', [KategorijaController::class, 'put']);
 Route::get('/kategorijas/update/{kategorijas}', [KategorijaController::class, 'update']);
 Route::post('/kategorijas/patch/{kategorijas}', [KategorijaController::class, 'patch']);
 Route::post('/kategorijas/delete/{kategorijas}', [KategorijaController::class, 'delete']);
+
+// Data/API
+Route::get('/data/get-top-filmas', [DataController::class, 'getTopFilmas']);
+Route::get('/data/get-filmas/{filmas}', [DataController::class, 'getFilmas']);
+Route::get('/data/get-related-filmas/{filmas}', [DataController::class,'getRelatedFilmas']);

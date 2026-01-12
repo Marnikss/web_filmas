@@ -15,10 +15,10 @@
                     <tr>
                         <td>{{ $rezisori->id }}</td>
                         <td>{{ $rezisori->name }}</td>
-                        <td><a href="/rezisori/update/{{ $rezisori->id }}" class="btn btn-outline-primary btnsm">Labot</a>
+                        <td><a href="/rezisori/update/{{ $rezisori->id }}" class="btn-orange btn-sm">Labot</a>
                         <form action="/rezisori/delete/{{ $rezisori->id }}" method="post" class="deletionform d-inline">
                             @csrf
-                            <button type="submit" class="btn btn-outline-danger btn-sm">Dzēst</button>
+                            <button type="submit" class="btn-orange btn-sm">Dzēst</button>
                         </form></td>
                     </tr>
                 @endforeach
@@ -27,5 +27,5 @@
     @else
         <p>Nav atrasts neviens ieraksts</p>
     @endif
-    <a href="/rezisori/create" class="btn btn-primary">Izveidot jaunu</a>
+    <a href="/rezisori/create" class="btn btn-primary" style="margin-left:40px">Izveidot jaunu</a>
 @endsection
